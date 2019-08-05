@@ -1,0 +1,48 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+</head>
+<body>
+<h1>Board Insert</h1>
+
+
+<form name="updateForm" id="updateForm" method="post"
+      style="width:600px;">
+    <div>
+        <span>회원번호</span> <span th:text="${user.user_number}">11111</span>
+        <input type="hidden" name="user_number" id="user_number" th:value="${user.user_number}"/>
+    </div>
+    <div>
+        <span>유저아이디</span>
+        <input type="text" name="id" id="id" value="1" th:value="${user.id}"/>
+    </div>
+    <div>
+        <span>비밀번호</span>
+        <input type="password" name="passwd" id="passwd" value="" />
+    </div>
+    <div>
+        <span>주소</span>
+        <textarea name="address" id="address" style="width: 100%; height: 100px;"><th:block th:text="${user.address}"></th:block></textarea>
+    </div>
+</form>
+
+<input type="button" value="수정" onclick="update();"/>
+
+<script type="text/javascript">
+    var update = function(){
+
+        if($.trim($('#passwd').val())==''){
+            alert('비밀번호를 입력해주세요');
+            return;
+        }
+
+        $('#updateForm')
+            .attr('action','/user/update')
+            .submit();
+    };
+</script>
+
+</body>
+</html>
