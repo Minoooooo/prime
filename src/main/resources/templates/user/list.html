@@ -35,10 +35,11 @@
 
     <tbody>
 
-    <tr th:each="board:${userList}">
-        <td th:text="${user.user_number}">글번호</td>
-        <td th:text="${user.id}">아이디</td>
-        <td><a th:href="@{'/user/view/' + ${user.user_number}}"><span th:text="${user.address}"></span></a></td>
+    <tr th:each="user:${userList}">
+        <td th:text="${user.user_number}">회원 번호</td>
+        <td><a th:href="@{'/user/view/' + ${user.user_number}}"><span th:text="${user.id}"></span></a></td>
+        <td th:text="${user.phonenumber}"></td>
+        <td th:text="${user.address}"></td>
 <!--        <td th:text="${#dates.format(board.qna_regdate, 'MM-dd HH:mm')}">등록일</td>-->
 
 </tr>
@@ -47,7 +48,7 @@
     </tbody>
 </table>
 
-<input type="button" value="등록" onclick="location.href='/user/insert';"/>
+<input type="button" value="등록" onclick="location.href='../board/insert';"/>
 
 
 </body>

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserService {
 
-
+    UserVO login(UserVO userVO, HttpServletRequest request);
 
     /**
      *     회원가입_등록_확인후

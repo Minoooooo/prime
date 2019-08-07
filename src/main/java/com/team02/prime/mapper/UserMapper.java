@@ -11,14 +11,9 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
-    /**
-     *     회원가입_등록 전
-     *    @param userVO
-     */
-    void insertUser_before(UserVO userVO);
 
     /**
-     *     회원가입_등록 후
+     *     회원가입
      *    @param userVO
      */
     void insertUser(UserVO userVO);
