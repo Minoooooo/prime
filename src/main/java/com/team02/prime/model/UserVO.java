@@ -12,7 +12,7 @@ public class UserVO {
 
     @Override
     public String toString() {
-        return "JoinVO{" +
+        return "UserVO{" +
                 "user_number=" + user_number +
                 ", id='" + id + '\'' +
                 ", passwd='" + passwd + '\'' +

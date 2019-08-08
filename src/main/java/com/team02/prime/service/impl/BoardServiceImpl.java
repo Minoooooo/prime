@@ -3,14 +3,12 @@ package com.team02.prime.service.impl;
 import com.team02.prime.mapper.BoardMapper;
 import com.team02.prime.model.BoardPaging;
 import com.team02.prime.model.BoardVO;
-import com.team02.prime.model.UserVO;
 import com.team02.prime.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -69,6 +67,7 @@ public class BoardServiceImpl implements BoardService {
 
         map.put("boardPaging", boardPaging);
         map.put("boardList", this.boardMapper.selectBoardList(boardPaging));
+        System.out.println("********************************" +this.boardMapper.selectBoardList(boardPaging) );
 
         return map;
     }

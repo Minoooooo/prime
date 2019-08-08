@@ -21,7 +21,7 @@
         <tr>
             <th>비밀번호</th>
             <td>
-                <input type="password" name="passwd" id="password">
+                <input type="password" name="passwd" id="passwd">
             </td>
         </tr>
     </table>
@@ -37,9 +37,9 @@
             $('#id').focus();
             return;
         }
-        if($.trim($('#password').val())==''){
+        if($.trim($('#passwd').val())==''){
             alert('비밀번호를 입력하세요.');
-            $('#password').focus();
+            $('#passwd').focus();
             return;
         }
 

@@ -5,53 +5,53 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 </head>
 <body>
-    <h1>Board View</h1>
+<h1>Board View</h1>
 
 
-    <form name="viewForm" id="viewForm" method="get" style="width:600px;">
+<form name="viewForm" id="viewForm" method="get" style="width:600px;">
 
-        <div><span>글번호</span> <span th:text="${board.board_num}">글번호</span></div>
+    <div><span>글번호</span> <span th:text="${board.board_num}">글번호</span></div>
 
-        <div><span>회원번호</span> <span th:text="${board.user_number}">회원번호</span></div>
+    <div><span>회원번호</span> <span th:text="${board.user_number}">회원번호</span></div>
 
-        <div><span>등록일자</span> <span th:text="${#dates.format(board.board_regdate, 'YYYY-mm-dd HH:mm')}">등록일자</span></div>
+    <div><span>등록일자</span> <span th:text="${#dates.format(board.board_register_date, 'YYYY-MM-dd HH:mm')}">등록일자</span></div>
 
-        <div>
-            <span>상세</span>
-            <div th:text="${board.board_content}"></div>
-        </div>
-    </form>
+    <div>
+        <span>상세</span>
+        <div th:text="${board.board_content}"></div>
+    </div>
+</form>
 
-    <input type="button" value="수정" onclick="modifyBoard();"/>
-    <input type="button" value="삭제" onclick="deleteBoard();"/>
-    <input type="button" value="목록" onclick="listBoard();"/>
+<input type="button" value="수정" onclick="modifyBoard();"/>
+<input type="button" value="삭제" onclick="deleteBoard();"/>
+<input type="button" value="목록" onclick="listBoard();"/>
 
 
-    <script type="text/javascript" th:inline="javascript">
-        
-        var board_num = /*[[ ${board.board_num} ]]*/;
-        
-        var modifyBoard = function(){
+<script type="text/javascript" th:inline="javascript">
+
+    var board_num = /*[[ ${board.board_num} ]]*/;
+
+    var modifyBoard = function(){
+        $('#viewForm')
+            .attr('action','/board/update/' + board_num)
+            .attr('method','get')
+            .submit();
+    };
+
+
+    var deleteBoard = function(){
+        if(confirm('삭제하시겠습니까?')){
             $('#viewForm')
-                .attr('action','/board/update/' + board_num)
-                .attr('method','get')
+                .attr('action','/board/delete/' + board_num)
+                .attr('method','post')
                 .submit();
-        };
-        
-        
-        var deleteBoard = function(){
-            if(confirm('삭제하시겠습니까?')){
-                $('#viewForm')
-                    .attr('action','/board/delete/' + board_num)
-                    .attr('method','post')
-                    .submit();
-            }
-        };
-        var listBoard = function(){
-            location.href='/board/list';
-        };
-        
-    </script>
+        }
+    };
+    var listBoard = function(){
+        location.href='/board/list';
+    };
+
+</script>
 
 </body>
 </html>

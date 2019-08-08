@@ -18,17 +18,17 @@
 
 </head>
 <body>
-<h1>Board List</h1>
+<h1>User List</h1>
 
 
 <table>
     <thead>
     <tr>
 
-        <td>글번호</td>
+        <td>회원번호</td>
         <td>아이디</td>
-        <td>내용</td>
-        <td>등록일</td>
+        <td>전화번호</td>
+        <td>주소</td>
     </tr>
     </thead>
 
@@ -36,19 +36,18 @@
     <tbody>
 
     <tr th:each="user:${userList}">
-        <td th:text="${user.user_number}">회원 번호</td>
-        <td><a th:href="@{'/user/view/' + ${user.user_number}}"><span th:text="${user.id}"></span></a></td>
-        <td th:text="${user.phonenumber}"></td>
-        <td th:text="${user.address}"></td>
+            <td th:text="${user.user_number}">회원 번호</td>
+            <td><a th:href="@{'/user/view/' + ${user.user_number}}"><span th:text="${user.id}"></span></a></td>
+             <td th:text="${user.phonenumber}"></td>
+             <td th:text="${user.address}"></td>
 <!--        <td th:text="${#dates.format(board.qna_regdate, 'MM-dd HH:mm')}">등록일</td>-->
-
-</tr>
+    </tr>
 
 
     </tbody>
 </table>
 
-<input type="button" value="등록" onclick="location.href='../board/insert';"/>
+<input type="button" value="등록" onclick="location.href='../user/insert';"/>
 
 
 </body>

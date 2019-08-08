@@ -7,9 +7,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -72,6 +76,7 @@ public class BoardController {
     @GetMapping("/board/list")
     public String boardList(Model model, @ModelAttribute BoardPaging boardPaging){
         model.addAllAttributes(this.boardService.selectBoardList(boardPaging));
+        System.out.println("********************************");
         return "board/list";
     }
 

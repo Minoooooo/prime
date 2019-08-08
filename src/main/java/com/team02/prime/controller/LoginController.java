@@ -43,7 +43,6 @@ public class LoginController {
             , HttpServletRequest request){
 
         this.userService.login(userVO, request);
-
         return "login/login_result";
     }
 }

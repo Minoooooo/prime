@@ -19,17 +19,19 @@ public class UserServiceImpl implements UserService {
     public UserVO login(UserVO userVO, HttpServletRequest request){
 
         log.debug("############ 로그인 요청 정보 #############");
-
+        System.out.println(userVO.getId());
+        System.out.println("121212344555");
+        System.out.println(userVO.toString());
         log.debug(userVO.toString());
 
         /**
          * Mapper 통해 Database 에서 조회한 회원정보
-         */
-        userVO.setAddress("서울");
-        userVO.setGender("m");
-       userVO.setUser_number(1);
-        userVO.setPhonenumber("010-1234-5678");
-        userVO.setName("홍길동");
+//         */
+//        userVO.setAddress("서울");
+//        userVO.setGender("m");
+//       userVO.setUser_number(1);
+//        userVO.setPhonenumber("010-1234-5678");
+//        userVO.setName("홍길동");
 
         if(userVO!=null){
             request.getSession().setAttribute("user", userVO);

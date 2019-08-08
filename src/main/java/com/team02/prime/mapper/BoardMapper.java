@@ -40,7 +40,7 @@ public interface BoardMapper {
      * 게시물 목록 조회
      * @return
      */
-    Map<String,Object> selectBoardList(BoardPaging boardPaging);
+    List<BoardVO> selectBoardList(BoardPaging boardPaging);
 
     /**
      * 게시물 갯수 조회

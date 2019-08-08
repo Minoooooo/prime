@@ -39,4 +39,5 @@ public interface BoardService {
      * @return
      */
     Map<String,Object> selectBoardList(BoardPaging boardPaging);
+
 }

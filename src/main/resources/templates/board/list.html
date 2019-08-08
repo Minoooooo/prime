@@ -46,7 +46,7 @@
         <td th:text="${board.board_num}">글번호</td>
         <td th:text="${board.id}">아이디</td>
         <td><a th:href="@{'/board/view/' + ${board.board_num}}"><span th:text="${board.board_content}"></span></a></td>
-        <td th:text="${#dates.format(board.board_regdate, 'MM-dd HH:mm')}">등록일</td>
+        <td th:text="${#dates.format(board.board_register_date, 'MM-dd HH:mm')}">등록일</td>
     </tr>
     </tbody>
 </table>
@@ -77,22 +77,15 @@
 </form>
 
 <script type="text/javascript" th:inline="javascript">
-
     var currentPage = /*[[${boardPaging.currentPage}]]*/;
-
     var goPage = function(p){
         var page = $(p).data('page');
-
         console.log(page);
-
         if(page>0){
             $('#currentPage').val(page);
             $('#boardPaging').submit();
         }
-
     };
-
-
 </script>
 
 </body>

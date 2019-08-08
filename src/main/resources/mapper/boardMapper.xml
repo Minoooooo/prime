@@ -4,17 +4,17 @@
 
 <mapper namespace="com.team02.prime.mapper.BoardMapper">
 
-<insert id="insertBoard"
+    <insert id="insertBoard"
             parameterType="com.team02.prime.model.BoardVO"
             useGeneratedKeys="true"
             keyProperty="board_num">
         <![CDATA[
-            INSERT INTO board (
-                board_title, board_passwd, board_content, board_regdate
-            )
-            VALUES (
-                #{board_title}, password(#{board_passwd}), #{board_content},now()
-            )
+        INSERT INTO board (
+            board_title, board_password, board_content, board_register_date,user_number
+        )
+        VALUES (
+                   #{board_title}, password(#{board_password}), #{board_content},now(),#{user_number}
+               )
         ]]>
     </insert>
 
@@ -23,7 +23,7 @@
         SET
             board_title = #{board_title},
             board_content = #{board_content},
-            board_passwd = password(#{board_passwd})
+            board_password = password(#{board_password})
         WHERE board_num = #{board_num}
 
     </update>
@@ -34,7 +34,7 @@
 
     <select id="selectBoard" parameterType="Integer" resultType="com.team02.prime.model.BoardVO">
         SELECT
-            board_num, user_number, board_content, board_passwd, board_regdate
+            board_num, board_title, board_content, board_password, board_register_date,user_number
         FROM board
         WHERE board_num = #{board_num}
     </select>
@@ -43,7 +43,7 @@
             parameterType="com.team02.prime.model.BoardPaging"
             resultType="com.team02.prime.model.BoardVO">
         SELECT
-        b.board_num, b.user_number, b.board_content, b.board_regdate
+        b.board_num, b.board_title, b.board_content, b.board_register_date
         , u.id, u.name
         FROM board b
         inner join user u on b.user_number = u.user_number
@@ -56,10 +56,11 @@
     </select>
 
 
+
     <select id="selectBoardListCount"
             parameterType="com.team02.prime.model.BoardPaging"
             resultType="int">
-        select count(1) from board
+        select count(1) from board b
         WHERE 1=1
         <if test="searchKeyword != null and searchKeyword != ''">
             AND b.board_content like concat('%', ${searchKeyword}, '%')
