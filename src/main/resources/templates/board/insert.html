@@ -9,12 +9,10 @@
 
 <form name="insertForm" id="insertForm" method="post" action="/board/insert"
       style="width:600px;">
-    <div><span>회원번호</span> <input type="text" name="user_number" id="user_number" value="1" />
+    <div><span>회원번호</span> <input type="text" name="user_number" id="user_number" value="1" /></div>
     <div><span>제목</span> <input type="text" name="board_title" id="board_title" /></div>
-    <div><span>이름</span> <input type="text" name="user.name" id="user.name"
+    <div><span>작성자</span> <input type="text" name="user.name" id="user.name"
                                 th:value="${ session.user!=null ? session.user.name : '' }" /></div>
-    <div><span>비밀번호</span> <input type="password" name="board_password"
-                                  id="board_password" /></div>
     <div>
         <span>상세</span>
         <textarea name="board_content" id="board_content" style="width: 100%; height: 100px;">
@@ -30,10 +28,14 @@
 </form>
 
 <input type="button" value="등록" onclick="insert();"/>
+<input type="button" value="취소" onclick="history.back();"/>
 
 <script type="text/javascript">
     var insert = function(){
-        $('#insertForm').submit();
+        if (confirm("등록 하시겠습니까?")) {
+            $('#insertForm').submit();
+            alert("게시물이 등록 되었습니다.")
+        }
     };
 </script>
 

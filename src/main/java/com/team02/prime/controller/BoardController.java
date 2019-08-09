@@ -76,7 +76,6 @@ public class BoardController {
     @GetMapping("/board/list")
     public String boardList(Model model, @ModelAttribute BoardPaging boardPaging){
         model.addAllAttributes(this.boardService.selectBoardList(boardPaging));
-        System.out.println("********************************");
         return "board/list";
     }
 

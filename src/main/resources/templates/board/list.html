@@ -31,9 +31,9 @@
     <tr>
 
         <td>글번호</td>
-        <td>아이디</td>
-        <td>내용</td>
-        <td>등록일</td>
+        <td>제목</td>
+        <td>작성자</td>
+        <td>작성일</td>
     </tr>
     </thead>
 
@@ -44,9 +44,9 @@
 
     <tr th:each="board:${boardList}">
         <td th:text="${board.board_num}">글번호</td>
-        <td th:text="${board.id}">아이디</td>
-        <td><a th:href="@{'/board/view/' + ${board.board_num}}"><span th:text="${board.board_content}"></span></a></td>
-        <td th:text="${#dates.format(board.board_register_date, 'MM-dd HH:mm')}">등록일</td>
+        <td><a th:href="@{'/board/view/' + ${board.board_num}}"><span th:text="${board.board_title}"></span></a></td>
+        <td th:text="${board.id}">작성자</td>
+        <td th:text="${#dates.format(board.board_register_date, 'MM-dd HH:mm')}">작성일</td>
     </tr>
     </tbody>
 </table>

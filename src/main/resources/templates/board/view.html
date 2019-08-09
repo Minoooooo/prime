@@ -12,7 +12,7 @@
 
     <div><span>글번호</span> <span th:text="${board.board_num}">글번호</span></div>
 
-    <div><span>회원번호</span> <span th:text="${board.user_number}">회원번호</span></div>
+    <div><span>제목</span> <span th:text="${board.board_title}">제목</span></div>
 
     <div><span>등록일자</span> <span th:text="${#dates.format(board.board_register_date, 'YYYY-MM-dd HH:mm')}">등록일자</span></div>
 
@@ -48,7 +48,7 @@
         }
     };
     var listBoard = function(){
-        location.href='/board/list';
+            location.href = '/board/list';
     };
 
 </script>

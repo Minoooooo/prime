@@ -67,7 +67,6 @@ public class BoardServiceImpl implements BoardService {
 
         map.put("boardPaging", boardPaging);
         map.put("boardList", this.boardMapper.selectBoardList(boardPaging));
-        System.out.println("********************************" +this.boardMapper.selectBoardList(boardPaging) );
 
         return map;
     }
