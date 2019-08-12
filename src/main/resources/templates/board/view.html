@@ -27,6 +27,19 @@
 <input type="button" value="목록" onclick="listBoard();"/>
 
 
+
+<!--댓글 구현-->
+
+
+
+
+
+
+
+
+
+
+
 <script type="text/javascript" th:inline="javascript">
 
     var board_num = /*[[ ${board.board_num} ]]*/;
@@ -46,12 +59,14 @@
                 .attr('method','post')
                 .submit();
         }
+        alert('게시물이 삭제 되었습니다.');
     };
     var listBoard = function(){
             location.href = '/board/list';
     };
 
 </script>
+
 
 </body>
 </html>

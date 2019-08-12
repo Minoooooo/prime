@@ -21,11 +21,13 @@
         ]]>
     </insert>
 
-    <update id="updataUserInfo" parameterType="com.team02.prime.model.UserVO">
+    <update id="updateUserInfo" parameterType="com.team02.prime.model.UserVO">
             UPDATE user
             SET
-                passwd = #{passwd},
+
+                name = #{name},
                 phonenumber = #{phonenumber},
+                gender = #{gender},
                 email = #{email},
                 address = #{address}
             WHERE id = #{id}

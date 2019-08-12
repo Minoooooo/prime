@@ -25,13 +25,13 @@ public class BoardController {
 
     //    @RequestMapping(value = "/board/insert", method = RequestMethod.GET)
     @GetMapping("/board/insert")
-    public String boardInsert(){
+    public String boardInsert() {
 
         return "board/insert";
     }
 
     @PostMapping("/board/insert")
-    public String boardInsertExecute(Model model, @ModelAttribute BoardVO boardVO){
+    public String boardInsertExecute(Model model, @ModelAttribute BoardVO boardVO) {
 
         log.debug("##### 게시물 등록 요청 처리 ####");
         log.debug(boardVO.toString());
@@ -44,43 +44,44 @@ public class BoardController {
 
         model.addAttribute("board", boardVO);
 
-        return "board/insert_after";
+        return "redirect:/board/list";
     }
 
 
     @GetMapping("/board/view/{board_num}")
-    public String boardView(Model model, @PathVariable int board_num){
+    public String boardView(Model model, @PathVariable int board_num) {
         model.addAttribute("board", this.boardService.selectBoard(board_num));
         return "board/view";
     }
 
     @PostMapping("/board/delete/{board_num}")
-    public String boardDelete(HttpServletRequest request, @PathVariable int board_num){
+    public String boardDelete(HttpServletRequest request, @PathVariable int board_num) {
         this.boardService.deleteBoard(request, board_num);
-        return "board/delete_after";
+        return "redirect:/board/list";
     }
 
     @GetMapping("/board/update/{board_num}")
-    public String boardUpdate(Model model, @PathVariable int board_num){
+    public String boardUpdate(Model model, @PathVariable int board_num) {
         model.addAttribute("board", this.boardService.selectBoard(board_num));
         return "board/update";
     }
 
+
     @PostMapping("/board/update")
-    public String boardUpdateExecute(Model model, @ModelAttribute BoardVO boardVO){
+    public String boardUpdateExecute(Model model, @ModelAttribute BoardVO boardVO) {
         this.boardService.updateBoard(boardVO);
         model.addAttribute("board", this.boardService.selectBoard(boardVO.getBoard_num()));
-        return "board/insert_after";
+        return "redirect:/board/list";
     }
 
     @GetMapping("/board/list")
-    public String boardList(Model model, @ModelAttribute BoardPaging boardPaging){
+    public String boardList(Model model, @ModelAttribute BoardPaging boardPaging) {
         model.addAllAttributes(this.boardService.selectBoardList(boardPaging));
         return "board/list";
     }
 
     @GetMapping("/postcode")
-    public String postocde(){
+    public String postocde() {
         return "postcode";
     }
 }
