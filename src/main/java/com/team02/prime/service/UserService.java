@@ -46,5 +46,11 @@ public interface UserService {
      * @return
      */
     List<UserVO> selectUserList();
+    /**
+     * 로그인한 회원 조회.
+     * @param id
+     * @return
+     */
+    UserVO selectUserLogin(String id,String passwd);
 
 }

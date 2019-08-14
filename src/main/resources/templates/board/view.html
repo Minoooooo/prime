@@ -3,6 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<!--    <link rel="stylesheet" href="/css/bootstrap.css">-->
+<!--    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">-->
+<!--    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>-->
 </head>
 <body>
 <h1>Board View</h1>
@@ -14,7 +30,8 @@
 
     <div><span>제목</span> <span th:text="${board.board_title}">제목</span></div>
 
-    <div><span>등록일자</span> <span th:text="${#dates.format(board.board_register_date, 'YYYY-MM-dd HH:mm')}">등록일자</span></div>
+    <div><span>등록일자</span> <span th:text="${#dates.format(board.board_register_date, 'YYYY-MM-dd HH:mm')}">등록일자</span>
+    </div>
 
     <div>
         <span>상세</span>
@@ -27,46 +44,78 @@
 <input type="button" value="목록" onclick="listBoard();"/>
 
 
-
 <!--댓글 구현-->
+<td>작성자</td>
+<td>내용</td>
+<td>작성일</td>
+<tr th:each="re:${replyList}">
+    <td th:text="${re.reply_id}">회원 번호</td>
+    <td th:text="${re.comment}"></td>
+    <td th:text="${#dates.format(re.register_date, 'MM-dd HH:mm')}">등록일</td>
+</tr>
+<script >
+    $(document).ready(function () {
+        $.ajax({
+            url: "http://localhost:8080/commentList",
+            type: "get",
+            dataType: "xml",
+            success: function (data) {
+                var commentList = "";
+                $(data).find("comment").each(function () {
+                    commentList += "<div>";
+                    var commentSpace = $(this).find("level").text();
+                    commentSpace *= 1;
+
+                    commentList += "<th:block th:each='i: ${#numbers.sequence(0, " + commentSpace + ")}'>"; // 이 부분에서 에러가 발생한다.
+                    commentList += "</th:block>";
+                    formValidate(commentSpace);
 
 
+                    commentList += $(this).find("reply_num").text();
+                    commentList += $(this).find("reply_id").text() + "<br/>";
+                    commentList += $(this).find("comment").text() + "";
+                    commentList += "</div>";
 
+                });
 
+                $("#commentDiv").append(commentList);
 
+            },
+            error: function name() {
+                $("#commentDiv").append("error");
+            }
+        });
+    });
 
-
-
-
+</script>
 
 
 <script type="text/javascript" th:inline="javascript">
 
     var board_num = /*[[ ${board.board_num} ]]*/;
 
-    var modifyBoard = function(){
+    var modifyBoard = function () {
         $('#viewForm')
-            .attr('action','/board/update/' + board_num)
-            .attr('method','get')
+            .attr('action', '/board/update/' + board_num)
+            .attr('method', 'get')
             .submit();
     };
 
 
-    var deleteBoard = function(){
-        if(confirm('삭제하시겠습니까?')){
+    var deleteBoard = function () {
+        if (confirm('삭제하시겠습니까?')) {
             $('#viewForm')
-                .attr('action','/board/delete/' + board_num)
-                .attr('method','post')
+                .attr('action', '/board/delete/' + board_num)
+                .attr('method', 'post')
                 .submit();
         }
         alert('게시물이 삭제 되었습니다.');
     };
-    var listBoard = function(){
-            location.href = '/board/list';
+    var listBoard = function () {
+        location.href = '/board/list';
     };
 
 </script>
-
 
 </body>
 </html>

@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -42,7 +44,22 @@ public class LoginController {
             , Model model
             , HttpServletRequest request){
 
+        userVO = this.userService.selectUserLogin(userVO.getId(), userVO.getPasswd());
+        if (userVO == null) {
+            userVO = new UserVO();
+        }
+
         this.userService.login(userVO, request);
         return "login/login_result";
+    }
+
+    @RequestMapping("/logout")
+    public String logoutExecute(Model model, HttpServletRequest request) {
+
+        UserVO user = (UserVO) request.getSession().getAttribute("user");
+        model.addAttribute("id", user.getId());
+        request.getSession().removeAttribute("user");
+        return "login/logout_result";
+
     }
 }

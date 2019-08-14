@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -26,12 +25,12 @@ public class UserController {
 
     //@RequestMapping(value = "/user/insert", method = RequestMethod.GET)
     @GetMapping("/user/insert")
-    public String userInsert(){
+    public String userInsert() {
         return "user/insert";
     }
 
     @PostMapping("/user/insert")
-    public String userInsertExecute(Model model, @ModelAttribute UserVO userVO){
+    public String userInsertExecute(Model model, @ModelAttribute UserVO userVO) {
 
 
         log.debug("##### 회원 등록 요청 처리 ####");
@@ -54,46 +53,45 @@ public class UserController {
 
 
     @GetMapping("/user/view/{user_number}")
-    public String userView(UserVO userVO,Model model, @PathVariable int user_number){
-
-        userVO= this.userService.selectUser(user_number);
-        model.addAttribute("user",userVO);
+    public String userView( Model model, @PathVariable int user_number) {
+        model.addAttribute("user", this.userService.selectUser(user_number));
         return "user/view";
     }
+
     @PostMapping("/user/delete/{user_number}")
-    public String userDelete(HttpServletRequest request,@PathVariable int user_number){
-        this.userService.deleteUser(request,user_number);
+    public String userDelete(HttpServletRequest request, @PathVariable int user_number) {
+        this.userService.deleteUser(request, user_number);
         return "user/delete_after";
     }
+
     @GetMapping("/user/delete_b/{user_number}")
-    public String b_userDelete(HttpServletRequest request,@PathVariable int user_number){
-        this.userService.delete_b_User(request,user_number);
+    public String b_userDelete(HttpServletRequest request, @PathVariable int user_number) {
+        this.userService.delete_b_User(request, user_number);
         return "user/insert";
     }
 
 
-
     @GetMapping("/user/update/{user_number}")
-    public String userUpdate(Model model, @PathVariable int user_number){
+    public String userUpdate(Model model, @PathVariable int user_number) {
         model.addAttribute("user", this.userService.selectUser(user_number));
         return "user/update";
     }
 
     @PostMapping("/user/update")
-    public String userUpdateExecute(Model model, @ModelAttribute UserVO userVO){
+    public String userUpdateExecute(Model model, @ModelAttribute UserVO userVO) {
 
         this.userService.updateUserInfo(userVO);
         model.addAttribute("user", this.userService.selectUser(userVO.getUser_number()));
-        return "redirect:/user/view/"+ userVO.getUser_number();
+        return "redirect:/user/view/" + userVO.getUser_number();
     }
 
     @GetMapping("/user/list")
-    public String userList(Model model){
+    public String userList(Model model) {
         model.addAttribute("userList", this.userService.selectUserList());
 
         List<UserVO> userList = new ArrayList<>();
 
-        for(UserVO userVO:userList){
+        for (UserVO userVO : userList) {
         }
 
         return "user/list";

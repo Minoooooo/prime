@@ -2,6 +2,7 @@ package com.team02.prime.controller;
 
 import com.team02.prime.model.BoardPaging;
 import com.team02.prime.model.BoardVO;
+import com.team02.prime.model.UserVO;
 import com.team02.prime.service.BoardService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +24,9 @@ public class BoardController {
     private BoardService boardService;
 
 
-    //    @RequestMapping(value = "/board/insert", method = RequestMethod.GET)
     @GetMapping("/board/insert")
-    public String boardInsert() {
-
+    public String boardInsert(@ModelAttribute UserVO userVO,Model model) {
+        model.addAttribute("user",userVO);
         return "board/insert";
     }
 
@@ -51,6 +51,7 @@ public class BoardController {
     @GetMapping("/board/view/{board_num}")
     public String boardView(Model model, @PathVariable int board_num) {
         model.addAttribute("board", this.boardService.selectBoard(board_num));
+
         return "board/view";
     }
 

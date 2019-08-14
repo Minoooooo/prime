@@ -56,5 +56,11 @@
         FROM user
         ORDER BY user_number DESC
     </select>
+    <select id ="selectUserLogin" parameterType="String" resultType="com.team02.prime.model.UserVO">
+        SELECT
+            user_number,passwd,id,name,gender,phonenumber,email,address
+        FROM user
+        WHERE id = #{id} and passwd = #{passwd}
+    </select>
 
 </mapper>

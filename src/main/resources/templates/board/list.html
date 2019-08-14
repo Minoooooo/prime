@@ -17,9 +17,28 @@
     </style>
 
 </head>
+<script type="text/javascript" th:inline="javascript">
+    var insert = function(){
+        var user = /*[[${session.user}]]*/;
+
+        console.log(user);
+
+        if (user!=null ){
+            // 유저면 글 등록으로 가기 ( 관리자나 / 회원 --  둘다 글쓰기는 동일)
+            $('#insertForm').attr('action','/board/insert').submit();
+        }
+        else{
+            // 유저 아니면 로그인 화면으로 가기.
+            alert("로그인을 해주세요.");
+            $('#insertForm').attr('action','/login/login').submit();
+        }
+    }
+
+</script>
 <body>
 <h1>Board List</h1>
-
+<div th:if="${session.user != null}" ><a href = "/logout">로그아웃</a></div>
+<div th:if="${session.user == null}" ><a href = "/login/login">로그인</a></div>
 
 <table>
     <thead>
@@ -44,14 +63,22 @@
 
     <tr th:each="board:${boardList}">
         <td th:text="${board.board_num}">글번호</td>
-        <td><a th:href="@{'/board/view/' + ${board.board_num}}"><span th:text="${board.board_title}"></span></a></td>
+        <td th:if="${session.user!=null}"><a th:href="@{'/board/view/' + ${board.board_num}}"><span
+                th:text="${board.board_title}"></span></a></td>
+        <td th:if="${session.user == null}"><a th:href="@{'/login/login'}"><span th:text="${board.board_title}"></span></a>
+        </td>
         <td th:text="${board.id}">작성자</td>
-        <td th:text="${#dates.format(board.board_register_date, 'MM-dd HH:mm')}">작성일</td>
+        <td th:text="${#dates.format(board.board_register_date, 'MM-dd HH:mm')}">등록일</td>
     </tr>
     </tbody>
 </table>
+<form name="insertForm" id="insertForm" method="get" >
+    <input type="button" value="등록" onclick="insert()"/>
+    <input type="hidden" name = "user_number"  th:value="${session.user.user_number}"/>
+    <input type="hidden" name = "id"  th:value="${session.user.id}"/>
+    <input type="hidden" name = "passwd"  th:value="${session.user.passwd}"/>
+</form>
 
-<input type="button" value="등록" onclick="location.href='/board/insert';"/>
 
 
 <div style="text-align: center; width:100%;">
