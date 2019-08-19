@@ -2,9 +2,12 @@ package com.team02.prime.controller;
 
 import com.team02.prime.model.BoardPaging;
 import com.team02.prime.model.BoardVO;
+import com.team02.prime.model.ReplyVO;
 import com.team02.prime.model.UserVO;
 import com.team02.prime.service.BoardService;
+import com.team02.prime.service.ReplyService;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,11 +25,15 @@ public class BoardController {
 
     @Autowired
     private BoardService boardService;
+    @Autowired
+    ReplyService replyService;
+
 
 
     @GetMapping("/board/insert")
     public String boardInsert(@ModelAttribute UserVO userVO,Model model) {
         model.addAttribute("user",userVO);
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         return "board/insert";
     }
 
@@ -51,6 +58,7 @@ public class BoardController {
     @GetMapping("/board/view/{board_num}")
     public String boardView(Model model, @PathVariable int board_num) {
         model.addAttribute("board", this.boardService.selectBoard(board_num));
+        model.addAttribute("reply",this.replyService.listReply(board_num));
 
         return "board/view";
     }

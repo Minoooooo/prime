@@ -45,46 +45,131 @@
 
 
 <!--댓글 구현-->
-<td>작성자</td>
-<td>내용</td>
-<td>작성일</td>
-<tr th:each="re:${replyList}">
-    <td th:text="${re.reply_id}">회원 번호</td>
-    <td th:text="${re.comment}"></td>
-    <td th:text="${#dates.format(re.register_date, 'MM-dd HH:mm')}">등록일</td>
-</tr>
-<script >
-    $(document).ready(function () {
+<div class="my-3 p-3 bg-white rounded shadow-sm" style="padding-top: 10px">
+
+    <form  id="replyform" name="replyform"  method="post" action="/restBoard/listReply">
+
+        <input type="hidden" path="board_num" id="board_num"/>
+
+        <div class="row">
+
+            <div class="col-sm-10">
+
+                <input type="textarea" path="reply.comment" id="reply.comment" class="form-control" rows="3" placeholder="댓글을 입력해 주세요">
+
+            </div>
+
+            <div class="col-sm-2">
+<!--                <span th:text="${reply.reply_id}">작성자</span>-->
+            </div>
+                <button type="button" class="btn btn-sm btn-primary" id="insertReply" style="margin-left: 15px; margin-top: 10px"> 등록 </button>
+
+
+
+        </div>
+
+    </form>
+
+</div>
+
+<div class="my-3 p-3 bg-white rounded shadow-sm" style="padding-top: 10px">
+
+    <h6 class="border-bottom pb-2 mb-0">Reply list</h6>
+
+    <div id="replyList"></div>
+
+</div>
+<script>
+
+    // 이전 코드 생략
+
+    function showReplyList(){
+
+        var url = "/restBoard/listReply";
+
+        var paramData = {"board_num" : "${board.board_num}"};
+
         $.ajax({
-            url: "http://localhost:8080/commentList",
-            type: "get",
-            dataType: "xml",
-            success: function (data) {
-                var commentList = "";
-                $(data).find("comment").each(function () {
-                    commentList += "<div>";
-                    var commentSpace = $(this).find("level").text();
-                    commentSpace *= 1;
 
-                    commentList += "<th:block th:each='i: ${#numbers.sequence(0, " + commentSpace + ")}'>"; // 이 부분에서 에러가 발생한다.
-                    commentList += "</th:block>";
-                    formValidate(commentSpace);
+            type: 'POST',
+
+            url: url,
+
+            data: paramData,
+
+            dataType: 'json',
+
+            success: function(result) {
+
+                var htmls = "";
+
+                if(result.length < 1){
+
+                    htmls.push("등록된 댓글이 없습니다.");
+
+                } else {
+
+                    $(result).each(function(){
+
+                        htmls += '<div class="media text-muted pt-3" id="rid' + this.rid + '">';
+
+                        htmls += '<svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder:32x32">';
+
+                        htmls += '<title>Placeholder</title>';
+
+                        htmls += '<rect width="100%" height="100%" fill="#007bff"></rect>';
+
+                        htmls += '<text x="50%" fill="#007bff" dy=".3em">32x32</text>';
+
+                        htmls += '</svg>';
+
+                        htmls += '<p class="media-body pb-3 mb-0 small lh-125 border-bottom horder-gray">';
+
+                        htmls += '<span class="d-block">';
+
+                        htmls += '<strong class="text-gray-dark">' + this.reply_id + '</strong>';
+
+                        htmls += '<span style="padding-left: 7px; font-size: 9pt">';
+
+                        htmls += '<a href="javascript:void(0)" onclick="fn_updateReply(' + this.rid + ', \'' + this.reply_id + '\', \'' + this.comment + '\' )" style="padding-right:5px">수정</a>';
+
+                        htmls += '<a href="javascript:void(0)" onclick="fn_deleteReply(' + this.rid + ')" >삭제</a>';
+
+                        htmls += '</span>';
+
+                        htmls += '</span>';
+
+                        htmls += this.comment;
+
+                        htmls += '</p>';
+
+                        htmls += '</div>';
 
 
-                    commentList += $(this).find("reply_num").text();
-                    commentList += $(this).find("reply_id").text() + "<br/>";
-                    commentList += $(this).find("comment").text() + "";
-                    commentList += "</div>";
 
-                });
+                    });	//each end
 
-                $("#commentDiv").append(commentList);
 
-            },
-            error: function name() {
-                $("#commentDiv").append("error");
-            }
-        });
+
+                }
+
+                $("#replyList").html(htmls);
+
+
+
+            }	   // Ajax success end
+
+        });	// Ajax end
+
+    }
+
+</script>
+<script>
+
+    $(document).ready(function(){
+
+        showReplyList();
+
     });
 
 </script>
