@@ -9,7 +9,7 @@
         FROM reply
     </select>
 
-    <select id="listReply" parameterType="int" resultType="com.team02.prime.model.ReplyVO">
+    <select id="getReplyList" parameterType="int" resultType="com.team02.prime.model.ReplyVO">
         SELECT *
         FROM reply
         where board_num = #{board_num}
@@ -17,7 +17,7 @@
     </select>
 
 
-    <insert id="insertReply" parameterType="com.team02.prime.model.ReplyVO">
+    <insert id="saveReply" parameterType="com.team02.prime.model.ReplyVO">
         INSERT INTO reply (reply_num, board_num, comment, reply_id, register_date)
         VALUES (#{reply_num}, #{board_num}, #{comment}, #{reply_id}, now())
     </insert>

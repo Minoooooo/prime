@@ -6,9 +6,11 @@ import com.team02.prime.model.ReplyVO;
 import com.team02.prime.model.UserVO;
 import com.team02.prime.service.BoardService;
 import com.team02.prime.service.ReplyService;
+import com.team02.prime.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -26,13 +28,12 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
     @Autowired
-    ReplyService replyService;
-
+    private UserService userService;
 
 
     @GetMapping("/board/insert")
-    public String boardInsert(@ModelAttribute UserVO userVO,Model model) {
-        model.addAttribute("user",userVO);
+    public String boardInsert(@ModelAttribute UserVO userVO, Model model) {
+        model.addAttribute("user", userVO);
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         return "board/insert";
     }
@@ -56,10 +57,10 @@ public class BoardController {
 
 
     @GetMapping("/board/view/{board_num}")
-    public String boardView(Model model, @PathVariable int board_num) {
+    public String boardView(Model model, @PathVariable int board_num, HttpServletRequest request) {
         model.addAttribute("board", this.boardService.selectBoard(board_num));
-        model.addAttribute("reply",this.replyService.listReply(board_num));
-
+        UserVO userVO = (UserVO) request.getSession().getAttribute("user");
+        model.addAttribute("id",userVO.getId());
         return "board/view";
     }
 

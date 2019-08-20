@@ -15,10 +15,10 @@ public interface ReplyMapper {
     public int countReply(int board_num);
 
     // 댓글 목록
-    public List<ReplyVO> listReply(int board_num);
+    public List<ReplyVO> getReplyList(int board_num);
 
     // 댓글 입력
-    public int insertReply(ReplyVO replyVO);
+    public void saveReply(ReplyVO replyVO);
 
     // 댓글 수정
     public int updateReply(ReplyVO replyVO);

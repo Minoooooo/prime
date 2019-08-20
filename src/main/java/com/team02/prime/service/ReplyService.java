@@ -13,7 +13,7 @@ public interface ReplyService {
      * 댓글 등록
      * @param replyVO
      */
-    void insertReply(ReplyVO replyVO);
+    void saveReply(ReplyVO replyVO);
 
     /**
      * 댓글 수정
@@ -33,7 +33,7 @@ public interface ReplyService {
      * @param board_num
      * @return
      */
-    List<ReplyVO> listReply(int board_num);
+    List<ReplyVO> getReplyList(int board_num);
 
 
 

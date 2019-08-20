@@ -22,8 +22,8 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
-    public void insertReply(ReplyVO replyVO) {
-        this.replyMapper.insertReply(replyVO);
+    public void saveReply(ReplyVO replyVO) {
+        this.replyMapper.saveReply(replyVO);
     }
 
     @Override
@@ -37,8 +37,9 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
-    public List<ReplyVO> listReply(int board_num) {
-        return this.replyMapper.listReply(board_num);
+    public List<ReplyVO> getReplyList(int board_num) {
+        return this.replyMapper.getReplyList(board_num);
     }
+
 
 }
